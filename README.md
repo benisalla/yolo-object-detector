@@ -7,12 +7,6 @@
 
 In this project, we've meticulously developed YOLOv1 from the ground up, and we've gone a step further by conducting comprehensive training on both Kaggle and Colab platforms.
 
-
-
-# YOLO Object Detection from Scratch
-
-This project is an implementation of the YOLO (You Only Look Once) object detection algorithm from scratch using [PyTorch](https://pytorch.org/).
-
 ## Table of Contents
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)

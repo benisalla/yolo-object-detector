@@ -24,7 +24,9 @@ In this project, we've meticulously developed YOLOv1 from the ground up, and we'
 
 ## Introduction
 
-Provide a brief introduction to your project, explaining what YOLO is and why you're implementing it from scratch. Mention any goals or objectives you have for this project.
+The You Only Look Once (YOLO) approach suggests using an end-to-end neural network to make simultaneous predictions of bounding boxes and class probabilities. This contrasts with previous object detection algorithms that adapted classifiers for detection purposes.
+
+
 
 ## Getting Started
 

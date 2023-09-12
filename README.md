@@ -134,7 +134,7 @@ create_dataset(min_idx=121, max_idx=141, csv_name="tiny_val",file_names=file_nam
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267452962-b060ef01-78ba-4fa4-a245-9e85b4b15d29.jpg" width="700" height="300"/>
 </div>
 
-## About Me 🚀
+## About Me
 🎓 I’m ismail ben alla, i love neural networks 😍. </br>
 ⛵ AI enthusiast </br>
 ✅ optimist and hardworker </br>

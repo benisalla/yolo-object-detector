@@ -12,7 +12,7 @@ In this project, we've meticulously developed YOLOv1 from the ground up, and we'
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
 - [Prerequisites](#prerequisites)
-- [Dataset Preparation](#Data PreProcessing)
+- [Dataset Preparation](#Data-PreProcessing)
 - [Training](#training)
 - [Inference](#inference)
 - [Contact](#Contact)

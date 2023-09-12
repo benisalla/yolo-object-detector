@@ -48,17 +48,14 @@ Provide step-by-step instructions for installing your project and its dependenci
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267437869-fa4e92c4-e5b7-45e9-a3d0-528052492352.jpeg" width="480" height="220" />
 </div>
 
-  The Stanford Question Answering Dataset (SQuAD) serves as a reading comprehension benchmark. It comprises questions formulated by crowdworkers, centered around a collection of Wikipedia articles. Each question is designed to be answered by a specific excerpt or segment of text from its corresponding reading passage. In some cases, the question could also be about content that cannot be answered directly from the provided passage.
+  The Mapillary traffic sign dataset is the largest and most diverse publicly accessible dataset for teaching machines the detection and recognition of traffic signs. It consists of 100,000 images from around the world, featuring significant variability in factors like weather, time of day, camera sensors, and perspectives.
 
 **Below are some key statistics about the dataset:**
+- The dataset contains 300+ unique traffic sign classes with over 320,000 labeled signs, including 52,000 fully verified and human-annotated images alongside partially annotated ones.
 
-1. **Combined Diversity**: SQuAD2.0 combines the strengths of SQuAD1.1's 100,000 questions with an additional 50,000 unanswerable questions. This comprehensive compilation enhances the dataset's scope and complexity.
+- Extensive experiments were conducted to establish a solid foundation for detection and classification tasks. The dataset's diversity supports efficient transfer learning for larger traffic sign datasets.
 
-2. **Adversarial Craftsmanship**: A distinctive feature of SQuAD2.0 is the inclusion of unanswerable questions created through adversarial techniques. These questions, over 50,000 in number, closely resemble answerable queries, posing an advanced challenge for systems.
-
-3. **Dual Evaluation Criterion**: SQuAD2.0 introduces a dual evaluation criterion. Systems are evaluated not only on their ability to answer questions but also on their capacity to recognize scenarios where no suitable answer can be derived from the provided information.
-
-4. **Abstention Competence**: Noteworthy is the demand for systems to showcase their capability of abstaining from answering when appropriate. This feature adds a layer of sophistication to the evaluation process.
+- Transfer learning using this dataset, as well as previously published traffic sign datasets, was analyzed. Pretraining on this dataset boosts average precision in binary detection by around 6%, thanks to its comprehensive and diverse nature.
 
   
 

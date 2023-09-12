@@ -28,17 +28,24 @@ The You Only Look Once (YOLO) approach suggests using an end-to-end neural netwo
 
 
 
+
+
 ## Getting Started
 
-Explain how to get started with your project.
+To reuse this implementation, consider the following scenarios:
+
+- If you are utilizing Google Colab, please upload your notebook and proceed to download the Mapillary dataset. Ensure that you save it to your Google Drive and verify that the file paths are correctly configured. Execute the CSV file generation process. It is advisable to follow these steps to ensure accuracy.
+
+- For users on Kaggle, the process is similar to that of Google Colab. However, there is no need to allocate time for dataset construction since Kaggle already provides access to two Mapillary datasets, one of 12GB and another of 29GB.
+
+
+
+
 
 ### Prerequisites
 
-List the software and hardware prerequisites required to run your code. Include information about which versions of Python, PyTorch, and other dependencies are needed.
+The key requirement here is to utilize a GPU (CUDA). Without it, the process will continue indefinitely, yielding no meaningful results.
 
-### Installation
-
-Provide step-by-step instructions for installing your project and its dependencies.
 
 
 ## Data Collection
@@ -61,50 +68,61 @@ Provide step-by-step instructions for installing your project and its dependenci
 
 ## Data PreProcessing
 
-### Extracting Context, Question and answer
-
-##### Note
-
-In our JSON object, the keys have been reversed for clarity and to avoid any ambiguities. 
-Here are the key mappings:
-
-- `txetnoc` maps to `context`
-- `noitseuq` maps to `question`
-- `rewsna` maps to `answer`
-
+### building input-label pair
 
 
 ```
-import json
+import os
+import csv
 
-big_file = []
-for index in range(1, 15):
-  print(index)
-  with open(f'/content/dataset_{index}.json') as json_file:
-      data = json.load(json_file)
+def get_all_file_names(directory):
+    file_names = os.listdir(directory)
+    return file_names
 
-  clean_data = []
-  for para in data["data"]:
-    for qas in para["paragraphs"]:
-      context = qas["context"]
-      for quests in qas["qas"]:
-        question = quests["question"]
-        for ans in quests["answers"]:
-          answer = ans["text"]
-          clean_data.append({"txetnoc": context,
-                            "noitseuq": question,
-                            "rewsna": answer})
-  big_file = [*big_file, *clean_data]
+def create_dataset(min_idx, max_idx, csv_name, file_names, dist_path):
+
+    with open(f"{dist_path}/{csv_name}.csv", mode="w", newline="") as csv_file:
+        for i, fl_name in enumerate(file_names[min_idx:max_idx+1]):
+            name = fl_name.split(".")[0]
+            img_name = name+".jpg"
+            label_name = name+".txt"
+            data = [img_name, label_name]
+            writer = csv.writer(csv_file)
+            writer.writerow(data)
 
 
+directory_path = "/content/Yolo_Test_Data/annotations"
+dist_path="/content/Yolo_Test_Data/"
 
-with open(f'/content/big_data.json', "w") as json_file:
-    json.dump(big_file, json_file)
+file_names = get_all_file_names(directory_path)
+
+train_size = [0, int(0.8 * len(file_names))+1]
+test_size = [train_size[0], int(0.2 * len(file_names))+1]
+val_size = [test_size[0], int(0.2 * len(file_names))+1]
+
+
+create_dataset(min_idx=train_size[0], max_idx=train_size[1], csv_name="big_train",file_names=file_names, dist_path=dist_path)
+create_dataset(min_idx=test_size[0], max_idx=test_size[1], csv_name="big_test",file_names=file_names, dist_path=dist_path)
+create_dataset(min_idx=val_size[0], max_idx=val_size[1], csv_name="big_val",file_names=file_names, dist_path=dist_path)
+
+# this is just when building the model
+create_dataset(min_idx=0, max_idx=101, csv_name="tiny_train",file_names=file_names, dist_path=dist_path)
+create_dataset(min_idx=101, max_idx=121, csv_name="tiny_test",file_names=file_names,dist_path=dist_path)
+create_dataset(min_idx=121, max_idx=141, csv_name="tiny_val",file_names=file_names, dist_path=dist_path)
 ```
+
 
 
 
 ## Training
+
+<div align="center">
+  <h4>Loss Value and mAP after 2000 iter</h4>
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267448009-008d8cc3-f4ff-4faf-8bb3-c6ac85270bbb.jpeg" width="300" height="300"/>
+</div>
+
+
+
 
 
 ## Inference
@@ -121,6 +139,6 @@ MIT
 
 
 <div align="center">
-  <h4>I hope you have enjoyed this little project</h4>
+  <h4>I hope you have enjoyed YOLO</h4>
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267407911-fe4de299-15c5-4689-9ce5-500b82cd128c.gif" width="300" height="300"/>
 </div>

@@ -11,15 +11,11 @@ In this project, we've meticulously developed YOLOv1 from the ground up, and we'
 ## Table of Contents
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Dataset Preparation](#dataset-preparation)
+- [Prerequisites](#prerequisites)
+- [Dataset Preparation](#Data PreProcessing)
 - [Training](#training)
 - [Inference](#inference)
-- [Evaluation](#evaluation)
-- [Results](#results)
-- [Customization](#customization)
-- [Contributing](#contributing)
+- [Contact](#Contact)
 - [License](#license)
 
 ## Introduction
@@ -138,10 +134,8 @@ create_dataset(min_idx=121, max_idx=141, csv_name="tiny_val",file_names=file_nam
 </div>
 
 
-## Evaluation
+## Contact
 
-
-## Results
 
 
 ## License

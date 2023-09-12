@@ -118,7 +118,7 @@ create_dataset(min_idx=121, max_idx=141, csv_name="tiny_val",file_names=file_nam
 
 <div align="center">
   <h4>Loss Value and mAP after 2000 iter</h4>
-  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267448009-008d8cc3-f4ff-4faf-8bb3-c6ac85270bbb.jpeg" width="300" height="300"/>
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267448009-008d8cc3-f4ff-4faf-8bb3-c6ac85270bbb.jpeg" width="700" height="300"/>
 </div>
 
 

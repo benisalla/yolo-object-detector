@@ -127,6 +127,16 @@ create_dataset(min_idx=121, max_idx=141, csv_name="tiny_val",file_names=file_nam
 
 ## Inference
 
+<div align="center">
+  <h4>after 2000 iter mAP ~= 50%</h4>
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267453546-a30a0581-788e-49d6-a8dc-8607d7c9656a.jpeg" width="700" height="300"/>
+</div>
+
+<div align="center">
+  <h4>after 4000 iter mAP ~= 80%</h4>
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267452962-b060ef01-78ba-4fa4-a245-9e85b4b15d29.jpg" width="700" height="300"/>
+</div>
+
 
 ## Evaluation
 

@@ -40,37 +40,87 @@ List the software and hardware prerequisites required to run your code. Include 
 
 Provide step-by-step instructions for installing your project and its dependencies.
 
-## Dataset Preparation
 
-Explain how to prepare the dataset for training. Include information on data collection, annotation, and any data augmentation techniques you're using.
+## Data Collection
+
+<div align="center">
+  <h5>Mapillary Dataset</h5>
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267437869-fa4e92c4-e5b7-45e9-a3d0-528052492352.jpeg" width="480" height="220" />
+</div>
+
+  The Stanford Question Answering Dataset (SQuAD) serves as a reading comprehension benchmark. It comprises questions formulated by crowdworkers, centered around a collection of Wikipedia articles. Each question is designed to be answered by a specific excerpt or segment of text from its corresponding reading passage. In some cases, the question could also be about content that cannot be answered directly from the provided passage.
+
+**Below are some key statistics about the dataset:**
+
+1. **Combined Diversity**: SQuAD2.0 combines the strengths of SQuAD1.1's 100,000 questions with an additional 50,000 unanswerable questions. This comprehensive compilation enhances the dataset's scope and complexity.
+
+2. **Adversarial Craftsmanship**: A distinctive feature of SQuAD2.0 is the inclusion of unanswerable questions created through adversarial techniques. These questions, over 50,000 in number, closely resemble answerable queries, posing an advanced challenge for systems.
+
+3. **Dual Evaluation Criterion**: SQuAD2.0 introduces a dual evaluation criterion. Systems are evaluated not only on their ability to answer questions but also on their capacity to recognize scenarios where no suitable answer can be derived from the provided information.
+
+4. **Abstention Competence**: Noteworthy is the demand for systems to showcase their capability of abstaining from answering when appropriate. This feature adds a layer of sophistication to the evaluation process.
+
+  
+
+## Data PreProcessing
+
+### Extracting Context, Question and answer
+
+##### Note
+
+In our JSON object, the keys have been reversed for clarity and to avoid any ambiguities. 
+Here are the key mappings:
+
+- `txetnoc` maps to `context`
+- `noitseuq` maps to `question`
+- `rewsna` maps to `answer`
+
+
+
+```
+import json
+
+big_file = []
+for index in range(1, 15):
+  print(index)
+  with open(f'/content/dataset_{index}.json') as json_file:
+      data = json.load(json_file)
+
+  clean_data = []
+  for para in data["data"]:
+    for qas in para["paragraphs"]:
+      context = qas["context"]
+      for quests in qas["qas"]:
+        question = quests["question"]
+        for ans in quests["answers"]:
+          answer = ans["text"]
+          clean_data.append({"txetnoc": context,
+                            "noitseuq": question,
+                            "rewsna": answer})
+  big_file = [*big_file, *clean_data]
+
+
+
+with open(f'/content/big_data.json', "w") as json_file:
+    json.dump(big_file, json_file)
+```
+
+
 
 ## Training
 
-Describe how to train the YOLO model using your dataset. Include details on hyperparameters, training scripts, and any special configurations.
 
 ## Inference
 
-Explain how to perform inference using your trained YOLO model. Provide sample code and instructions for running object detection on new images or videos.
 
 ## Evaluation
 
-Discuss the evaluation metrics and methods you use to assess the performance of your model. Include instructions for running evaluation scripts.
 
 ## Results
 
-Present the results of your YOLO model, including performance metrics and visualizations. You can include images or videos with bounding boxes to demonstrate the model's capabilities.
-
-## Customization
-
-Explain how users can customize and adapt your code for their specific use cases. Provide guidance on modifying the model architecture, loss functions, or other components.
-
-## Contributing
-
-Encourage other developers to contribute to your project. Include guidelines for submitting pull requests and reporting issues.
 
 ## License
-
-Specify the license under which your project is distributed. Include any copyright notices or credits for third-party libraries or datasets used in your project.
+MIT
 
 
 <div align="center">

@@ -15,7 +15,8 @@ In this project, we've meticulously developed YOLOv1 from the ground up, and we'
 - [Dataset Preparation](#DataPreProcessing)
 - [Training](#training)
 - [Inference](#inference)
-- [Contact](#Contact)
+- [About Me](#AboutMe)
+- [Contact Me](#ContactMe)
 - [License](#license)
 
 ## Introduction
@@ -133,9 +134,20 @@ create_dataset(min_idx=121, max_idx=141, csv_name="tiny_val",file_names=file_nam
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267452962-b060ef01-78ba-4fa4-a245-9e85b4b15d29.jpg" width="700" height="300"/>
 </div>
 
+## About Me 🚀
+🎓 I’m ismail ben alla, i love neural networks 😍. </br>
+⛵ AI enthusiast </br>
+✅ optimist and hardworker </br>
+🌱 Learning advanced computer science technologies</br>
+😄 I LOVE WHAT I AM DOING</br>
 
-## Contact
 
+## Contact Me
+<p align="left">
+<a href="https://twitter.com/ismail_ben_alla" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="ismail_ben_alla" height="30" width="40" /></a>
+<a href="https://linkedin.com/in/ismail-ben-alla-7144b5221/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="ismail-ben-alla-7144b5221/" height="30" width="40" /></a>
+<a href="https://instagram.com/ismail_ben_alla" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="ismail_ben_alla" height="30" width="40" /></a>
+</p>
 
 
 ## License

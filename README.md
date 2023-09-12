@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>yolo_v1_from_scratch</h1>
+  <h1>YOLOv1: Building Object Detection from scratch</h1>
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267428432-a2230106-812f-49d6-acd2-1575f321a37a.png" width="700" height="300" />
 </div>
 

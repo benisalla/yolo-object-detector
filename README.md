@@ -1,4 +1,10 @@
-# yolo_v1_from_scratch
+<div align="center">
+  <h1>yolo_v1_from_scratch</h1>
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267428432-a2230106-812f-49d6-acd2-1575f321a37a.png" width="700" height="300" />
+</div>
+
+
+
 In this project, we've meticulously developed YOLOv1 from the ground up, and we've gone a step further by conducting comprehensive training on both Kaggle and Colab platforms.
 
 
@@ -70,5 +76,7 @@ Encourage other developers to contribute to your project. Include guidelines for
 Specify the license under which your project is distributed. Include any copyright notices or credits for third-party libraries or datasets used in your project.
 
 <center>
+  <h4>I hope you have enjoyed this little project</h4>
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267407911-fe4de299-15c5-4689-9ce5-500b82cd128c.gif" width="300" height="300"/>
 </center>
+

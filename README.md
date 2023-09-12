@@ -15,8 +15,8 @@ In this project, we've meticulously developed YOLOv1 from the ground up, and we'
 - [Dataset Preparation](#DataPreProcessing)
 - [Training](#training)
 - [Inference](#inference)
-- [About Me](#AboutMe)
-- [Contact Me](#ContactMe)
+- [About Me](#About)
+- [Contact Me](#Contact)
 - [License](#license)
 
 ## Introduction

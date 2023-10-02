@@ -134,24 +134,42 @@ create_dataset(min_idx=121, max_idx=141, csv_name="tiny_val",file_names=file_nam
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267452962-b060ef01-78ba-4fa4-a245-9e85b4b15d29.jpg" width="700" height="300"/>
 </div>
 
-## About
-🎓 I’m ismail ben alla, i love neural networks 😍. </br>
-⛵ AI enthusiast </br>
-✅ optimist and hardworker </br>
-🌱 Learning advanced computer science technologies</br>
-😄 I LOVE WHAT I AM DOING</br>
 
 
-## Contact
-<p align="left">
-<a href="https://twitter.com/ismail_ben_alla" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="ismail_ben_alla" height="30" width="40" /></a>
-<a href="https://linkedin.com/in/ismail-ben-alla-7144b5221/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="ismail-ben-alla-7144b5221/" height="30" width="40" /></a>
-<a href="https://instagram.com/ismail_ben_alla" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="ismail_ben_alla" height="30" width="40" /></a>
-</p>
+
+## Contact Me
+Feel free to reach out to me:
+- Email ([ismailbenalla52@gmail.com](mailto:ismailbenalla52@gmail.com))
+- linkedin: ([Ben alla Ismail](https://www.linkedin.com/in/ismail-ben-alla-bai/))
 
 
-## License
-MIT
+
+
+## About Me
+
+🎓 I'm Ismail Ben Alla, and I have a deep passion for neural networks 😍. My mission is to assist neural networks in unraveling the mysteries of our universe.</br>
+⛵ I'm an enthusiast when it comes to AI, Deep Learning, and Machine Learning algorithms.</br>
+✅ I'm an optimist and a dedicated hard worker, constantly striving to push the boundaries of what's possible.</br>
+🌱 I'm committed to continuously learning and staying updated with advanced computer science technologies.</br>
+😄 I absolutely love what I do, and I'm excited about the endless possibilities in the world of AI and machine learning!</br>
+
+Let's connect and explore the fascinating world of artificial intelligence together! 🤖🌟
+
+
+<div align="center">
+  <a href="https://twitter.com/ismail_ben_alla" target="blank">
+    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="ismail_ben_alla" height="30" width="40" />
+  </a>
+  <a href="https://linkedin.com/in/ismail-ben-alla-7144b5221/" target="blank">
+    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="ismail-ben-alla-7144b5221/" height="30" width="40" />
+  </a>
+  <a href="https://instagram.com/ismail_ben_alla" target="blank">
+    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="ismail_ben_alla" height="30" width="40" />
+  </a>
+</div>
+
+
+
 
 
 <div align="center">

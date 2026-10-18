@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "yolo-v1-object-detector"
+version = "1.0.0"
+description = "YOLOv1 object detection in PyTorch: the paper network, loss, NMS and mAP, trained on synthetic shapes, MNIST digits, PASCAL VOC or any YOLO-format dataset."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Ismail Ben Alla", email = "ismailbenalla52@gmail.com" }]
+requires-python = ">=3.10"
+keywords = ["yolo", "yolov1", "object-detection", "pytorch", "computer-vision", "deep-learning", "traffic-signs"]
+dependencies = [
+  "matplotlib>=3.7",
+  "numpy>=1.24",
+  "pillow>=10",
+  "torch>=2.2",
+  "torchvision>=0.17",
+]
+
+[project.urls]
+Repository = "https://github.com/benisalla/yolo-v1-object-detector"
+
+[project.scripts]
+yolov1-train = "yolov1.train:main"
+yolov1-predict = "yolov1.predict:main"
+yolov1-evaluate = "yolov1.evaluate:main"
+
+[project.optional-dependencies]
+camera = ["opencv-python>=4.8"]
+dev = ["pytest>=8", "ruff>=0.9", "nbformat>=5"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/yolov1"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+extend-exclude = ["legacy", "*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]

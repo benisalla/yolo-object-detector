@@ -1,178 +1,163 @@
-<div align="center">
-  <h1>YOLOv1: Building Object Detection Model from scratch</h1>
-  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267430814-f1bbe296-e561-45ea-96c3-9afa4c34fdb8.png" width="700" height="300" />
-</div>
+# YOLOv1 object detector
 
+**Give it an image and it draws a box around every object it knows, with its class, in one pass.**
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org)
+[![Paper: YOLOv1](https://img.shields.io/badge/paper-arXiv%201506.02640-b31b1b.svg)](https://arxiv.org/abs/1506.02640)
 
-In this project, we've meticulously developed YOLOv1 from the ground up, and we've gone a step further by conducting comprehensive training on both Kaggle and Colab platforms.
+A clean PyTorch implementation of **YOLOv1** ("You Only Look Once",
+[Redmon et al., 2016](https://arxiv.org/abs/1506.02640)): the 24-layer network, the
+sum-squared-error loss, target encoding, decoding, non-maximum suppression and mAP, written
+without detection libraries or pretrained weights. It trains on synthetic shapes, MNIST digits,
+PASCAL VOC or any dataset in the YOLO text format (such as the Mapillary traffic signs this
+project started with), on a CPU or a free Kaggle / Colab GPU.
 
-
-## Table of Contents
-- [Introduction](#introduction)
-- [Getting Started](#getting-started)
-- [Prerequisites](#prerequisites)
-- [Dataset Preparation](#DataPreProcessing)
-- [Training](#training)
-- [Inference](#inference)
-- [About Me](#About)
-- [Contact Me](#Contact)
-- [License](#license)
-
-## Introduction
-
-The You Only Look Once (YOLO) approach suggests using an end-to-end neural network to make simultaneous predictions of bounding boxes and class probabilities. This contrasts with previous object detection algorithms that adapted classifiers for detection purposes.
-
-
-
-
-
-## Getting Started
-
-To reuse this implementation, consider the following scenarios:
-
-- If you are utilizing Google Colab, please upload your notebook and proceed to download the Mapillary dataset. Ensure that you save it to your Google Drive and verify that the file paths are correctly configured. Execute the CSV file generation process. It is advisable to follow these steps to ensure accuracy.
-
-- For users on Kaggle, the process is similar to that of Google Colab. However, there is no need to allocate time for dataset construction since Kaggle already provides access to two Mapillary datasets, one of 12GB and another of 29GB.
-
-
-
-
-
-### Prerequisites
-
-The key requirement here is to utilize a GPU (CUDA). Without it, the process will continue indefinitely, yielding no meaningful results.
-
-
-
-## Data Collection
-
-<div align="center">
-  <h5>Mapillary Dataset</h5>
-  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267437869-fa4e92c4-e5b7-45e9-a3d0-528052492352.jpeg" width="480" height="220" />
-</div>
-
-  The Mapillary traffic sign dataset is the largest and most diverse publicly accessible dataset for teaching machines the detection and recognition of traffic signs. It consists of 100,000 images from around the world, featuring significant variability in factors like weather, time of day, camera sensors, and perspectives.
-
-**Below are some key statistics about the dataset:**
-- The dataset contains 300+ unique traffic sign classes with over 320,000 labeled signs, including 52,000 fully verified and human-annotated images alongside partially annotated ones.
-
-- Extensive experiments were conducted to establish a solid foundation for detection and classification tasks. The dataset's diversity supports efficient transfer learning for larger traffic sign datasets.
-
-- Transfer learning using this dataset, as well as previously published traffic sign datasets, was analyzed. Pretraining on this dataset boosts average precision in binary detection by around 6%, thanks to its comprehensive and diverse nature.
-
-  
-
-## Data PreProcessing
-
-### building input-label pair
-
-
-```
-import os
-import csv
-
-def get_all_file_names(directory):
-    file_names = os.listdir(directory)
-    return file_names
-
-def create_dataset(min_idx, max_idx, csv_name, file_names, dist_path):
-
-    with open(f"{dist_path}/{csv_name}.csv", mode="w", newline="") as csv_file:
-        for i, fl_name in enumerate(file_names[min_idx:max_idx+1]):
-            name = fl_name.split(".")[0]
-            img_name = name+".jpg"
-            label_name = name+".txt"
-            data = [img_name, label_name]
-            writer = csv.writer(csv_file)
-            writer.writerow(data)
-
-
-directory_path = "/content/Yolo_Test_Data/annotations"
-dist_path="/content/Yolo_Test_Data/"
-
-file_names = get_all_file_names(directory_path)
-
-train_size = [0, int(0.8 * len(file_names))+1]
-test_size = [train_size[0], int(0.2 * len(file_names))+1]
-val_size = [test_size[0], int(0.2 * len(file_names))+1]
-
-
-create_dataset(min_idx=train_size[0], max_idx=train_size[1], csv_name="big_train",file_names=file_names, dist_path=dist_path)
-create_dataset(min_idx=test_size[0], max_idx=test_size[1], csv_name="big_test",file_names=file_names, dist_path=dist_path)
-create_dataset(min_idx=val_size[0], max_idx=val_size[1], csv_name="big_val",file_names=file_names, dist_path=dist_path)
-
-# this is just when building the model
-create_dataset(min_idx=0, max_idx=101, csv_name="tiny_train",file_names=file_names, dist_path=dist_path)
-create_dataset(min_idx=101, max_idx=121, csv_name="tiny_test",file_names=file_names,dist_path=dist_path)
-create_dataset(min_idx=121, max_idx=141, csv_name="tiny_val",file_names=file_names, dist_path=dist_path)
+```mermaid
+flowchart LR
+    IMG["image<br/>448 × 448"] --> NET["24 conv layers<br/>+ 2 fully connected"]
+    NET --> GRID["7 × 7 grid<br/>per cell: 2 boxes + 20 classes"]
+    GRID --> NMS["score = confidence × P(class)<br/>non-max suppression"]
+    NMS --> OUT["boxes + classes"]
 ```
 
+YOLOv1's idea: split the image into an S × S grid; the cell holding an object's centre predicts
+its class and B candidate boxes with a confidence. Detection becomes a single regression, so the
+network sees the whole image at once and runs in real time. See
+[docs/architecture.md](docs/architecture.md).
 
+## Quick start
 
+```bash
+# 1. install (Python >= 3.10)
+git clone https://github.com/benisalla/yolo-v1-object-detector.git
+cd yolo-v1-object-detector
+python -m venv .venv && source .venv/bin/activate
+pip install -e '.[dev]'
 
-## Training
+# 2. run the tests (CPU, no network, under a minute)
+pytest
 
-<div align="center">
-  <h4>Loss Value and mAP after 2000 iter</h4>
-  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267448009-008d8cc3-f4ff-4faf-8bb3-c6ac85270bbb.jpeg" width="700" height="300"/>
-</div>
+# 3. train on synthetic shapes (CPU, no download, ~40 min)
+yolov1-train --dataset shapes --image-size 112 --arch small --hidden 512 \
+             --train-size 2000 --val-size 200 --epochs 20 --batch-size 32 --lr 1e-3 \
+             --output-dir checkpoints/shapes
 
+# 4. train on MNIST digits scattered on a canvas (12 MB download)
+yolov1-train --dataset mnist --root data --image-size 112 --arch small --hidden 512 \
+             --train-size 3000 --val-size 300 --epochs 20 --batch-size 32 --lr 1e-3 \
+             --output-dir checkpoints/mnist
 
+# 5. evaluate and detect
+yolov1-evaluate --checkpoint checkpoints/mnist/best.pt
+yolov1-predict --checkpoint checkpoints/mnist/best.pt --images my_digits.png
+```
 
+**On a GPU:** open [`notebooks/train_kaggle_colab.ipynb`](notebooks/train_kaggle_colab.ipynb)
+on Kaggle or Colab, choose the dataset (`shapes`, `mnist`, `voc` or your own `yolo` folder) and
+press *Run all*. The paper network needs a GPU: 448 × 448 inputs and 271M parameters.
 
+## Results
 
-## Inference
+**Sanity check (verified by the test suite).** A small network memorises 4 shape images in
+60 steps: the loss falls by more than 10× and mAP@0.5 reaches 1.0. Run
+`pytest tests/test_train.py -k overfit` to reproduce it.
 
-<div align="center">
-  <h4>after 2000 iter mAP ~= 50%</h4>
-  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267453546-a30a0581-788e-49d6-a8dc-8607d7c9656a.jpeg" width="700" height="300"/>
-</div>
+**Simple-data runs (CPU, `small` network, 112 × 112 inputs, 7 × 7 grid, 8.3M parameters).**
 
-<div align="center">
-  <h4>after 4000 iter mAP ~= 80%</h4>
-  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267452962-b060ef01-78ba-4fa4-a245-9e85b4b15d29.jpg" width="700" height="300"/>
-</div>
+| dataset | classes | train / val images | epochs | validation mAP@0.5 | time (8-core CPU) |
+|---|---|---|---|---|---|
+| `shapes` | 3 | 2 000 / 200 | 20 | __SHAPES_MAP__ | __SHAPES_TIME__ |
+| `mnist` | 10 | 3 000 / 300 | 20 | __MNIST_MAP__ | __MNIST_TIME__ |
 
+<p align="center">
+  <img src="assets/shapes_predictions.png" width="900" alt="shapes: ground truth above, predictions below"/>
+  <br/><em>shapes validation images: ground truth (top), predictions after 20 epochs (bottom)</em>
+</p>
+<p align="center">
+  <img src="assets/mnist_predictions.png" width="900" alt="mnist: ground truth above, predictions below"/>
+  <br/><em>MNIST digits: ground truth (top), predictions (bottom)</em>
+</p>
+<p align="center">
+  <img src="assets/mnist_history.png" width="900" alt="training curves"/>
+  <br/><em>MNIST run: loss, validation mAP and the four loss components per epoch</em>
+</p>
 
+Both runs are reproduced by the commands in the quick start; every run writes its own
+`history.png`, `predictions.png` and `best_metrics.json`. [docs/testing.md](docs/testing.md)
+explains how to repeat them after a change.
 
+## Datasets
 
-## Contact Me
-Feel free to reach out to me:
-- Email ([ismailbenalla52@gmail.com](mailto:ismailbenalla52@gmail.com))
-- linkedin: ([Ben alla Ismail](https://www.linkedin.com/in/ismail-ben-alla-bai/))
+| `--dataset` | data | classes | download |
+|---|---|---|---|
+| `shapes` | circles, squares and triangles generated on the fly, exact boxes | 3 | none |
+| `mnist` | 1 to 3 MNIST digits pasted on a canvas | 10 | 12 MB |
+| `voc` | [PASCAL VOC](http://host.robots.ox.ac.uk/pascal/VOC/) 2012 or 2007, the paper's benchmark | 20 | ~2 GB |
+| `yolo` | any folder of `images/` + `labels/` in the YOLO text format (`class cx cy w h`), e.g. the [Mapillary traffic signs](https://www.mapillary.com/dataset/trafficsign) export | yours | yours |
 
+```bash
+# your own data: train / val split by a seeded shuffle, class names from classes.txt
+yolov1-train --dataset yolo --root data/mapillary --image-size 448 --arch yolov1 --epochs 100
+```
 
+Folder layout and all options: [docs/training.md](docs/training.md).
 
+## Project layout
 
-## About Me
+```
+yolo-v1-object-detector/
+├── src/yolov1/
+│   ├── model.py         # the YOLOv1 network (paper architecture + a small CPU one)
+│   ├── loss.py          # the paper's loss, any number of boxes per cell
+│   ├── boxes.py         # IoU, target encoding, decoding, non-max suppression
+│   ├── metrics.py       # mAP@IoU, VOC style
+│   ├── data/            # shapes, mnist, voc, yolo-txt datasets + augmentations
+│   ├── train.py         # training loop and the yolov1-train command
+│   ├── evaluate.py      # the yolov1-evaluate command
+│   ├── predict.py       # the yolov1-predict command (files or webcam)
+│   ├── viz.py           # box drawing, prediction grids, training curves
+│   └── config.py        # every setting, as dataclasses
+├── tests/               # pytest: boxes, model, loss, metrics, data, overfit sanity check
+├── notebooks/           # Kaggle / Colab notebook, generated from src by build_notebook.py
+├── docs/                # architecture, training, testing
+├── assets/              # figures of the simple-data runs
+└── legacy/              # the original 2023 notebooks and the list of bugs fixed since
+```
 
-🎓 I'm Ismail Ben Alla, and I have a deep passion for neural networks 😍. My mission is to assist neural networks in unraveling the mysteries of our universe.</br>
-⛵ I'm an enthusiast when it comes to AI, Deep Learning, and Machine Learning algorithms.</br>
-✅ I'm an optimist and a dedicated hard worker, constantly striving to push the boundaries of what's possible.</br>
-🌱 I'm committed to continuously learning and staying updated with advanced computer science technologies.</br>
-😄 I absolutely love what I do, and I'm excited about the endless possibilities in the world of AI and machine learning!</br>
+## Documentation
 
-Let's connect and explore the fascinating world of artificial intelligence together! 🤖🌟
+| guide | what is inside |
+|---|---|
+| [docs/architecture.md](docs/architecture.md) | the grid, the network, the loss, decoding, NMS and mAP |
+| [docs/training.md](docs/training.md) | datasets, YOLO folder layout, recipes, outputs, evaluation, inference, Kaggle / Colab |
+| [docs/testing.md](docs/testing.md) | what each test checks and how to re-run the simple-data checks |
+| [legacy/README.md](legacy/README.md) | the original notebooks and the bugs fixed since |
 
+## History
 
-<div align="center">
-  <a href="https://twitter.com/ismail_ben_alla" target="blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="ismail_ben_alla" height="30" width="40" />
-  </a>
-  <a href="https://linkedin.com/in/ismail-ben-alla-7144b5221/" target="blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="ismail-ben-alla-7144b5221/" height="30" width="40" />
-  </a>
-  <a href="https://instagram.com/ismail_ben_alla" target="blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="ismail_ben_alla" height="30" width="40" />
-  </a>
-</div>
+This project started in 2023 as two notebooks trained on Mapillary traffic signs
+([`legacy/`](legacy)). It has been rewritten as a tested package. Among the problems fixed: the
+test and validation CSVs were subsets of the training CSV, so the reported mAP was measured on
+training images; the mAP ignored every class above 20; boxes were drawn from their centre as if
+it were a corner; the second box of each cell was never used at test time.
+[legacy/README.md](legacy/README.md) lists them all.
 
+## Reference
 
+```bibtex
+@inproceedings{redmon2016yolo,
+  title     = {You Only Look Once: Unified, Real-Time Object Detection},
+  author    = {Redmon, Joseph and Divvala, Santosh and Girshick, Ross and Farhadi, Ali},
+  booktitle = {IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2016}
+}
+```
 
+## Author
 
+**Ismail Ben Alla**: [LinkedIn](https://www.linkedin.com/in/ismail-ben-alla-bai/) ·
+[GitHub](https://github.com/benisalla) · ismailbenalla52@gmail.com
 
-<div align="center">
-  <h4>I hope you have enjoyed YOLO</h4>
-  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/89405673/267407911-fe4de299-15c5-4689-9ce5-500b82cd128c.gif" width="300" height="300"/>
-</div>
+MIT License, see [LICENSE](LICENSE).

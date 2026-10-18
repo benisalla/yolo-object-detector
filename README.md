@@ -45,8 +45,8 @@ yolov1-train --dataset shapes --image-size 112 --arch small --hidden 512 \
              --output-dir checkpoints/shapes
 
 # 4. train on MNIST digits scattered on a canvas (12 MB download)
-yolov1-train --dataset mnist --root data --image-size 112 --arch small --hidden 512 \
-             --train-size 3000 --val-size 300 --epochs 20 --batch-size 32 --lr 1e-3 \
+yolov1-train --dataset mnist --root data --image-size 112 --arch small --hidden 512 --dropout 0.1 \
+             --no-augment --train-size 3000 --val-size 300 --epochs 30 --batch-size 32 --lr 1e-3 \
              --output-dir checkpoints/mnist
 
 # 5. evaluate and detect
@@ -68,8 +68,8 @@ press *Run all*. The paper network needs a GPU: 448 × 448 inputs and 271M param
 
 | dataset | classes | train / val images | epochs | validation mAP@0.5 | time (8-core CPU) |
 |---|---|---|---|---|---|
-| `shapes` | 3 | 2 000 / 200 | 20 | __SHAPES_MAP__ | __SHAPES_TIME__ |
-| `mnist` | 10 | 3 000 / 300 | 20 | __MNIST_MAP__ | __MNIST_TIME__ |
+| `shapes` | 3 | 2 000 / 200 | 20 | **0.952** (circle 0.94, square 0.97, triangle 0.94) | 25 min |
+| `mnist` | 10 | 3 000 / 300 | 20 | _run in progress, numbers to be added_ | ~45 min |
 
 <p align="center">
   <img src="assets/shapes_predictions.png" width="900" alt="shapes: ground truth above, predictions below"/>

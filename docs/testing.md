@@ -28,8 +28,8 @@ digits). Run them again after changing the model, loss or data pipeline:
 yolov1-train --dataset shapes --image-size 112 --arch small --hidden 512 \
              --train-size 2000 --val-size 200 --epochs 20 --batch-size 32 --lr 1e-3 \
              --output-dir checkpoints/shapes
-yolov1-train --dataset mnist --root data --image-size 112 --arch small --hidden 512 \
-             --train-size 3000 --val-size 300 --epochs 20 --batch-size 32 --lr 1e-3 \
+yolov1-train --dataset mnist --root data --image-size 112 --arch small --hidden 512 --dropout 0.1 \
+             --no-augment --train-size 3000 --val-size 300 --epochs 30 --batch-size 32 --lr 1e-3 \
              --output-dir checkpoints/mnist
 yolov1-evaluate --checkpoint checkpoints/mnist/best.pt
 ```

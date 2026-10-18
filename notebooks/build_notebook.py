@@ -127,8 +127,8 @@ else:
 PRESETS = {
     "shapes": dict(data=dict(image_size=112, train_size=4000, val_size=400),
                    model=dict(arch="small", hidden=512), epochs=25, batch_size=64, lr=1e-3),
-    "mnist": dict(data=dict(image_size=112, train_size=6000, val_size=600, root="data", augment=False),
-                  model=dict(arch="small", hidden=512, dropout=0.1), epochs=40, batch_size=64, lr=1e-3),
+    "mnist": dict(data=dict(image_size=112, train_size=20000, val_size=1000, root="data", augment=False),
+                  model=dict(arch="small", hidden=512, dropout=0.3), epochs=15, batch_size=64, lr=1e-3),
     "voc": dict(data=dict(image_size=448, root="data"),
                 model=dict(arch="yolov1", hidden=4096), epochs=135, batch_size=32, lr=1e-4),
     "yolo": dict(data=dict(image_size=448, root=YOLO_ROOT, images_dir=IMAGES_DIR, labels_dir=LABELS_DIR,

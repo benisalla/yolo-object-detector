@@ -50,7 +50,9 @@ class MnistDetection(Dataset):
                 continue
             x0, y0 = rng.randint(0, s - side), rng.randint(0, s - side)
             bx1, by1, bx2, by2 = x0 + xs.min(), y0 + ys.min(), x0 + xs.max() + 1, y0 + ys.max() + 1
-            if any(bx1 < ox2 and bx2 > ox1 and by1 < oy2 and by2 > oy1 for ox1, oy1, ox2, oy2 in (b[5:] for b in boxes)):
+            if any(
+                bx1 < ox2 and bx2 > ox1 and by1 < oy2 and by2 > oy1 for ox1, oy1, ox2, oy2 in (b[5:] for b in boxes)
+            ):
                 continue  # keep digits apart
             region = canvas[y0 : y0 + side, x0 : x0 + side]
             np.maximum(region, digit, out=region)

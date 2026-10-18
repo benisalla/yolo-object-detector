@@ -44,9 +44,9 @@ yolov1-train --dataset shapes --image-size 112 --arch small --hidden 512 \
              --train-size 2000 --val-size 200 --epochs 20 --batch-size 32 --lr 1e-3 \
              --output-dir checkpoints/shapes
 
-# 4. train on MNIST digits scattered on a canvas (12 MB download)
-yolov1-train --dataset mnist --root data --image-size 112 --arch small --hidden 512 --dropout 0.1 \
-             --no-augment --train-size 3000 --val-size 300 --epochs 30 --batch-size 32 --lr 1e-3 \
+# 4. train on MNIST digits scattered on a canvas (12 MB download, ~30 min)
+yolov1-train --dataset mnist --root data --image-size 112 --arch small --hidden 512 --dropout 0.3 \
+             --no-augment --train-size 10000 --val-size 500 --epochs 12 --batch-size 32 --lr 1e-3 \
              --output-dir checkpoints/mnist
 
 # 5. evaluate and detect
@@ -69,7 +69,7 @@ press *Run all*. The paper network needs a GPU: 448 × 448 inputs and 271M param
 | dataset | classes | train / val images | epochs | validation mAP@0.5 | time (8-core CPU) |
 |---|---|---|---|---|---|
 | `shapes` | 3 | 2 000 / 200 | 20 | **0.952** (circle 0.94, square 0.97, triangle 0.94) | 25 min |
-| `mnist` | 10 | 3 000 / 300 | 20 | _run in progress, numbers to be added_ | ~45 min |
+| `mnist` | 10 | 10 000 / 500 | 12 | **0.921** (lowest: digit 1 at 0.75, digit 8 at 0.88) | 26 min |
 
 <p align="center">
   <img src="assets/shapes_predictions.png" width="900" alt="shapes: ground truth above, predictions below"/>
@@ -85,7 +85,11 @@ press *Run all*. The paper network needs a GPU: 448 × 448 inputs and 271M param
 </p>
 
 Both runs are reproduced by the commands in the quick start; every run writes its own
-`history.png`, `predictions.png` and `best_metrics.json`. [docs/testing.md](docs/testing.md)
+`history.png`, `predictions.png` and `best_metrics.json`. The prediction grids above use a
+display threshold of 0.3; the mAP is computed at 0.1 so that low-score boxes count for recall.
+Two lessons from the MNIST run: with only 3 000 training images the same network overfits
+(train loss 0.3, validation 1.6, mAP 0.55), and horizontal flips must stay off because they
+change a digit's identity, so the generated datasets are trained without augmentation. [docs/testing.md](docs/testing.md)
 explains how to repeat them after a change.
 
 ## Datasets

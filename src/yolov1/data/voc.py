@@ -33,5 +33,7 @@ class VocDetection(Dataset):
                 continue
             b = obj["bndbox"]
             x1, y1, x2, y2 = (float(b[k]) for k in ("xmin", "ymin", "xmax", "ymax"))
-            rows.append([CLASSES.index(obj["name"]), (x1 + x2) / 2 / w, (y1 + y2) / 2 / h, (x2 - x1) / w, (y2 - y1) / h])
+            rows.append(
+                [CLASSES.index(obj["name"]), (x1 + x2) / 2 / w, (y1 + y2) / 2 / h, (x2 - x1) / w, (y2 - y1) / h]
+            )
         return image, torch.tensor(rows, dtype=torch.float32).reshape(-1, 5)

@@ -48,7 +48,10 @@ class ShapesDetection(Dataset):
             cls = rng.randrange(len(CLASSES))
             r = rng.uniform(0.08, 0.2) * s
             cx, cy = rng.uniform(r, s - r), rng.uniform(r, s - r)
-            if any(abs(cx - bx * s) < (r + bw * s / 2) and abs(cy - by * s) < (r + bh * s / 2) for _, bx, by, bw, bh in boxes):
+            if any(
+                abs(cx - bx * s) < (r + bw * s / 2) and abs(cy - by * s) < (r + bh * s / 2)
+                for _, bx, by, bw, bh in boxes
+            ):
                 continue  # skip overlapping shapes: one object per cell is YOLOv1's assumption anyway
             color = tuple(rng.randint(0, 120) for _ in range(3))
             _draw_shape(draw, cls, cx, cy, r, color)

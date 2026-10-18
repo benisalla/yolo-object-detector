@@ -45,10 +45,10 @@ yolov1-train --dataset shapes --image-size 112 --arch small --hidden 512 \
              --train-size 2000 --val-size 200 --epochs 20 --batch-size 32 --lr 1e-3 \
              --output-dir checkpoints/shapes
 
-# CPU, about an hour: MNIST digits, 10 classes (digits on a plain canvas need no augmentation,
-# and dropout 0.5 slows the class term a lot in a short run)
-yolov1-train --dataset mnist --root data --image-size 112 --arch small --hidden 512 --dropout 0.1 \
-             --no-augment --train-size 3000 --val-size 300 --epochs 30 --batch-size 32 --lr 1e-3 \
+# CPU, half an hour: MNIST digits, 10 classes. No augmentation: a flipped digit is another digit,
+# and the images are generated anyway, so use more of them instead (3 000 images overfit)
+yolov1-train --dataset mnist --root data --image-size 112 --arch small --hidden 512 --dropout 0.3 \
+             --no-augment --train-size 10000 --val-size 500 --epochs 12 --batch-size 32 --lr 1e-3 \
              --output-dir checkpoints/mnist
 
 # GPU: the paper network on PASCAL VOC 2012 (use the notebook on Kaggle / Colab)

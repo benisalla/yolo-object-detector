@@ -3,7 +3,7 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "yolo-v1-object-detector"
+name = "yolo-object-detector"
 version = "1.0.0"
 description = "YOLOv1 object detection in PyTorch: the paper network, loss, NMS and mAP, trained on synthetic shapes, MNIST digits, PASCAL VOC or any YOLO-format dataset."
 readme = "README.md"
@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/benisalla/yolo-v1-object-detector"
+Repository = "https://github.com/benisalla/yolo-object-detector"
 
 [project.scripts]
 yolov1-train = "yolov1.train:main"

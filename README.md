@@ -31,8 +31,8 @@ network sees the whole image at once and runs in real time. See
 
 ```bash
 # 1. install (Python >= 3.10)
-git clone https://github.com/benisalla/yolo-v1-object-detector.git
-cd yolo-v1-object-detector
+git clone https://github.com/benisalla/yolo-object-detector.git
+cd yolo-object-detector
 python -m venv .venv && source .venv/bin/activate
 pip install -e '.[dev]'
 
@@ -111,7 +111,7 @@ Folder layout and all options: [docs/training.md](docs/training.md).
 ## Project layout
 
 ```
-yolo-v1-object-detector/
+yolo-object-detector/
 ├── src/yolov1/
 │   ├── model.py         # the YOLOv1 network (paper architecture + a small CPU one)
 │   ├── loss.py          # the paper's loss, any number of boxes per cell

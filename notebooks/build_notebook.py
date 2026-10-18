@@ -117,7 +117,7 @@ if ON_COLAB and USE_GOOGLE_DRIVE:
     from google.colab import drive
 
     drive.mount("/content/drive")
-    OUTPUT_DIR = Path(f"/content/drive/MyDrive/yolo-v1-object-detector/{DATASET}")
+    OUTPUT_DIR = Path(f"/content/drive/MyDrive/yolo-object-detector/{DATASET}")
 elif ON_KAGGLE:
     OUTPUT_DIR = Path(f"/kaggle/working/checkpoints/{DATASET}")
 else:
